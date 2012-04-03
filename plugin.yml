@@ -1,0 +1,59 @@
+name: JSEssentials
+main: com.imjake9.server.essentials.JSEssentials
+description: Provides general commands for JServer.
+version: 0.4
+author: imjake9
+depend: [JSLib]
+
+commands:
+  item:
+    description: Gives a player items.
+    usage: /<command> [player] <item[:data]> [amount]
+    aliases: [give, i]
+  time:
+    description: Provides information about the time as well as commands for altering it.
+    usage: |
+      /<command> [world]
+      /<command> [world] <set <value>|day|night>
+  weather:
+    description: Provides information about the weather as well as commands for altering it.
+    usage: |
+      /<command> [world]
+      /<command> [world] <sun|storm>
+  spawnmob:
+    description: Spawns mobs.
+    usage: /<command> <mobtype>
+    aliases: [smob]
+  spawn:
+    description: Teleports you back to spawn.
+    usage: /<command>
+  setspawn:
+    description: Sets the current world's spawn point.
+    usage: /<command>
+  teleport:
+    description: Teleports you or another player.
+    usage: |
+      /<command> <destination>
+      /<command> <target> <destination>
+    aliases: [tp, tele]
+  teleporthere:
+    description: Teleports a player to you.
+    usage: |
+      /<command> <target>
+    aliases: [tphere, telehere]
+  teleportcoordinates:
+    description: Teleports to a location.
+    usage: |
+      /<command> <world> <x> <y> <z>
+      /<command> <target> <world> <x> <y> <z>
+    aliases: [tploc, tpcoord, tppos]
+  me:
+    description: Chats as if performing an action.
+    usage: /<command> <message>
+  tell:
+    description: Send a private message to a player.
+    usage: /<command> <player> <message>
+    aliases: [pm, msg]
+  reply:
+    description: Reply to a private message.
+    usage: /<command> <message>
