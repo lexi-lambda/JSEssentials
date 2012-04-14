@@ -633,11 +633,11 @@ public class JSEssentialsCommandHandler implements CommandExecutor {
         }
         
         public String getPermission() {
-            return JSEssentials.getPlugin().getPermissionsManager().getPermission(name().toLowerCase());
+            return JSEssentials.getPermissionsManager().getPermission(name().toLowerCase());
         }
         
         public boolean hasPermission(CommandSender sender) {
-            return JSEssentials.getPlugin().getPermissionsManager().hasPermission(sender, name().toLowerCase());
+            return JSEssentials.getPermissionsManager().hasPermission(sender, name().toLowerCase());
         }
         
         public String getPermissionMessage() {
@@ -645,11 +645,11 @@ public class JSEssentialsCommandHandler implements CommandExecutor {
         }
         
         public String getSubPermission(String node) {
-            return JSEssentials.getPlugin().getPermissionsManager().getPermission(name().toLowerCase() + "." + node);
+            return JSEssentials.getPermissionsManager().getPermission(name().toLowerCase() + "." + node);
         }
         
         public boolean hasSubPermission(CommandSender sender, String node) {
-            return JSEssentials.getPlugin().getPermissionsManager().hasPermission(sender, name().toLowerCase() + "." + node);
+            return JSEssentials.getPermissionsManager().hasPermission(sender, name().toLowerCase() + "." + node);
         }
         
         public abstract boolean handle(CommandSender sender, String... args);
