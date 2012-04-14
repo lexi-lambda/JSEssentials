@@ -1,7 +1,7 @@
 name: JSEssentials
 main: com.imjake9.server.essentials.JSEssentials
 description: Provides general commands for JServer.
-version: 0.4
+version: 0.5
 author: imjake9
 depend: [JSLib]
 

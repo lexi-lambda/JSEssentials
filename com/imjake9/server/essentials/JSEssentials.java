@@ -1,22 +1,25 @@
 package com.imjake9.server.essentials;
 
+import com.imjake9.server.lib.plugin.JSPlugin;
 import java.util.logging.Logger;
-import org.bukkit.plugin.java.JavaPlugin;
 
-public class JSEssentials extends JavaPlugin {
+public class JSEssentials extends JSPlugin {
     
     private static JSEssentials plugin;
     
     private static final Logger log = Logger.getLogger("Minecraft");
     
     private JSEssentialsCommandHandler commandHandler;
-    private JSEssentialsPermissionsHandler permissionsHandler;
     
     @Override
-    public void onEnable() {
+    public void onJSEnable() {
         plugin = this;
         commandHandler = new JSEssentialsCommandHandler();
-        permissionsHandler = new JSEssentialsPermissionsHandler();
+    }
+    
+    @Override
+    public void onJSDisable() {
+        
     }
     
     public static JSEssentials getPlugin() {
@@ -25,10 +28,6 @@ public class JSEssentials extends JavaPlugin {
     
     public static JSEssentialsCommandHandler getCommandHandler() {
         return plugin.commandHandler;
-    }
-    
-    public static JSEssentialsPermissionsHandler getPermissionsHandler() {
-        return plugin.permissionsHandler;
     }
     
 }
