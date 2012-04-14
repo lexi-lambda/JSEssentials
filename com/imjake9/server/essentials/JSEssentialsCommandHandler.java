@@ -5,6 +5,7 @@ import com.imjake9.server.lib.Messaging;
 import com.imjake9.server.lib.Messaging.JSMessage;
 import java.util.*;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -279,6 +280,78 @@ public class JSEssentialsCommandHandler implements CommandExecutor {
             
             @Override
             public boolean handle(CommandSender sender, String... args) {
+                return false;
+            }
+            
+        },
+        GAMEMODE("gm") {
+            
+            @Override
+            public boolean handle(CommandSender sender, String... args) {
+                
+                // Set up parameters
+                String player;
+                String mode;
+                
+                // Parse command
+                if (!(sender instanceof Player)) {
+                    if (args.length == 0) {
+                        Messaging.send(JSMessage.MISSING_PARAMETER, sender, "player");
+                        return false;
+                    }
+                    player = args[0];
+                    if (args.length > 1)
+                        mode = args[1];
+                    else
+                        mode = "toggle";
+                } else {
+                    if (args.length > 1) {
+                        player = args[0];
+                        mode = args[1];
+                    } else if (args.length > 0) {
+                        if (!args[0].equals("0") && !args[0].equals("1") && !args[0].equalsIgnoreCase("creative") && !args[0].equalsIgnoreCase("survival")) {
+                            player = args[0];
+                            mode = "toggle";
+                        } else {
+                            player = ((Player) sender).getName();
+                            mode = args[0];
+                        }
+                    } else {
+                        player = ((Player) sender).getName();
+                        mode = "toggle";
+                    }
+                }
+                
+                Player target = Bukkit.getPlayer(player);
+                
+                // The player must exist
+                if (target == null) {
+                    Messaging.send(JSMessage.INVALID_PLAYER, sender, player);
+                    return true;
+                }
+                
+                // Define toggle command
+                if (mode.equalsIgnoreCase("toggle")) {
+                    if (target.getGameMode() == GameMode.SURVIVAL)
+                        mode = "1";
+                    else
+                        mode = "0";
+                }
+                
+                // Execute command
+                if (mode.equals("0") || mode.equalsIgnoreCase("survival")) {
+                    target.setGameMode(GameMode.SURVIVAL);
+                    Messaging.send(JSEMessage.GAME_MODE_SET, sender, player, "survival");
+                    return true;
+                }
+                if (mode.equals("1") || mode.equalsIgnoreCase("creative")) {
+                    target.setGameMode(GameMode.CREATIVE);
+                    Messaging.send(JSEMessage.GAME_MODE_SET, sender, player, "creative");
+                    return true;
+                }
+                
+                // Gamemode was wrong
+                Messaging.send(JSEMessage.INVALID_GAME_MODE, sender, mode);
                 return false;
             }
             

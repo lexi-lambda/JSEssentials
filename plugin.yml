@@ -1,7 +1,7 @@
 name: JSEssentials
 main: com.imjake9.server.essentials.JSEssentials
 description: Provides general commands for JServer.
-version: 0.5
+version: 0.6
 author: imjake9
 depend: [JSLib]
 
@@ -24,6 +24,10 @@ commands:
     description: Spawns mobs.
     usage: /<command> <mobtype>
     aliases: [smob]
+  gamemode:
+    description: Alters a player's gamemode.
+    usage: /<command> [player] [mode]
+    aliases: [gm]
   spawn:
     description: Teleports you back to spawn.
     usage: /<command>

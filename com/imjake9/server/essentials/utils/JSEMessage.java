@@ -8,6 +8,8 @@ public enum JSEMessage implements MessageTemplate {
     
     ME_CHAT(MessageLevel.PLAIN, "* %1 %2"),
     CURRENT_TIME(MessageLevel.PLAIN, "Current time in <aqua>%1</aqua> is <aqua><b>%2</b></aqua> (%3)."),
+    GAME_MODE_SET(MessageLevel.PLAIN, "Player <aqua>%1</aqua> set to game mode <aqua>%2</aqua>."),
+    INVALID_GAME_MODE(MessageLevel.ERROR, "Gamemode <i>%1</i> does not exist."),
     INVALID_TIME_STRING(MessageLevel.ERROR, "Time <i>%1</i> is invalid."),
     NO_REPLY_PLAYER(MessageLevel.ERROR, "No player to reply to."),
     PM_CHAT(MessageLevel.PRIVATE, "[PM] to <u>%1</u>: %2"),
