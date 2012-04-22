@@ -31,6 +31,7 @@ public enum JSEMessage implements MessageTemplate {
     }
 
     JSEMessage(String format) {
+        this(MessageLevel.NORMAL, format);
     }
 
     /**
