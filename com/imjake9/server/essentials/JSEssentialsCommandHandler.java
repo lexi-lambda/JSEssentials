@@ -7,12 +7,14 @@ import java.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class JSEssentialsCommandHandler implements CommandExecutor {
     
@@ -55,7 +57,79 @@ public class JSEssentialsCommandHandler implements CommandExecutor {
             
             @Override
             public boolean handle(CommandSender sender, String... args) {
-                return false;
+                
+                // Set up parameters
+                boolean explicitPlayer = false;
+                Player player;
+                Material material;
+                int amount;
+                short damage;
+                
+                // Non-players must specify a player
+                if (!(sender instanceof Player)) {
+                    if (args.length < 2) {
+                        Messaging.send(JSMessage.MISSING_PARAMETER, sender, "player");
+                        return false;
+                    } else if (Bukkit.getPlayer(args[0]) == null) {
+                        Messaging.send(JSMessage.INVALID_PLAYER, sender, args[0]);
+                        return true;
+                    }
+                } else if (args.length < 1) {
+                    Messaging.send(JSMessage.MISSING_PARAMETER, sender, "type");
+                    return false;
+                }
+                // If specified, get player
+                if (args.length >= 2 && Bukkit.getPlayer(args[0]) != null) {
+                    player = Bukkit.getPlayer(args[0]);
+                    explicitPlayer = true;
+                } else {
+                    player = (Player) sender;
+                }
+                // Get the material type
+                String[] split = args[explicitPlayer ? 1 : 0].split(":");
+                String mat = split[0];
+                material = Material.matchMaterial(mat);
+                if (material == null) try { material = Material.getMaterial(Integer.parseInt(mat)); } catch (Exception ex) { material = null; }
+                if (material == null) {
+                    Messaging.send(JSEMessage.INVALID_ITEM_NAME, sender, mat);
+                    return true;
+                }
+                // Get the material data
+                if (split.length > 1) {
+                    String data = split[1];
+                    try {
+                        damage = Short.parseShort(data);
+                    } catch (NumberFormatException ex) {
+                        Messaging.send(JSMessage.INVALID_PARAMTER, sender, "data", split[1]);
+                        return true;
+                    }
+                } else {
+                    damage = 0;
+                }
+                // Get the amount
+                if (args.length > (explicitPlayer ? 2 : 1)) {
+                    String amnt = args[explicitPlayer ? 2 : 1];
+                    try {
+                        amount = Integer.parseInt(amnt);
+                    } catch (NumberFormatException ex) {
+                        Messaging.send(JSMessage.INVALID_PARAMTER, sender, "amount", amnt);
+                        return true;
+                    }
+                } else {
+                    amount = 1;
+                }
+                
+                // Give player item
+                player.getInventory().addItem(new ItemStack(material, amount, damage));
+                if (explicitPlayer && !player.equals(sender)) {
+                    Messaging.send(JSEMessage.ITEM_GIVEN, sender, player.getName(), material.toString());
+                    Messaging.send(JSEMessage.ITEM_RECIEVED, player, material.toString(), sender.getName());
+                } else {
+                    Messaging.send(JSEMessage.ITEM_FULFILLED, sender, material.toString());
+                }
+                
+                return true;
+                
             }
             
         },

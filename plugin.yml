@@ -1,14 +1,14 @@
 name: JSEssentials
 main: com.imjake9.server.essentials.JSEssentials
 description: Provides general commands for JServer.
-version: 0.8
+version: 0.9
 author: imjake9
 depend: [JSLib]
 
 commands:
   item:
     description: Gives a player items.
-    usage: /<command> [player] <item[:data]> [amount]
+    usage: /<command> [player] <type[:data]> [amount]
     aliases: [give, i]
   time:
     description: Provides information about the time as well as commands for altering it.
